@@ -1,8 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class GooseGameTest {
 
@@ -75,5 +74,26 @@ public class GooseGameTest {
         assertEquals("6",gooseGame.playerList.get(0).getPosition());
     }
 
+    @Test
+    public void moveWithRandomValues(){
+        gooseGame.addPlayer("add player Pippo");
+        gooseGame.dispatchCommand("move Pippo");
+        assertFalse(gooseGame.playerList.get(0).getPosition().equals("Start"));
+    }
+
+    @Test
+    public void landOnTheBridge(){
+        gooseGame.addPlayer("add player Pippo");
+        gooseGame.dispatchCommand("move Pippo 2, 2");
+        assertEquals("Pippo rolls 1, 1. Pippo moves from 4 to The Bridge. Pippo jumps to 12",
+                               gooseGame.movePlayer("move Pippo 1, 1"));
+    }
+
+    @Test
+    public void landOnAGoose(){
+        gooseGame.addPlayer("add player Pippo");
+        assertEquals("Pippo rolls 1, 4. Pippo moves from Start to 5, The Goose. Pippo moves again and goes to 10",
+                gooseGame.movePlayer("move Pippo 1, 4"));
+    }
 
 }

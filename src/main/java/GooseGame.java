@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class GooseGame {
 
@@ -43,10 +41,18 @@ public class GooseGame {
         String inputWords[] = input.split(" |, ");
         if(inputWords[0].equals("move")){
             String playerName = inputWords[1];
-            String dice1 = inputWords[2];
-            String dice2 = inputWords[3];
-            String message = playerName + " rolls " + dice1 + ", " + dice2 + ". ";
-            int increment = Integer.parseInt(dice1) + Integer.parseInt(dice2);
+
+            String firstDie = String.valueOf(throwDice());
+            String secondDie = String.valueOf(throwDice());
+
+            if(inputWords.length > 2) {
+                firstDie = inputWords[2];
+                secondDie = inputWords[3];
+            }
+
+
+            String message = playerName + " rolls " + firstDie + ", " + secondDie + ". ";
+            int increment = Integer.parseInt(firstDie) + Integer.parseInt(secondDie);
             for(Player player : playerList){
                 message = incrementPositionAndWriteMessage(playerName, message, increment, player);
             }
@@ -59,6 +65,7 @@ public class GooseGame {
         if(player.name().equals(playerName)){
             message += player.name() + " moves from " + player.getPosition();
             player.incrementPosition(increment);
+            ArrayList<Integer> goosePosition = new ArrayList<Integer>(Arrays.asList(5, 9, 14, 18, 23, 27));
 
             int currentPosition = Integer.parseInt(player.getPosition());
             if(currentPosition >=63){
@@ -69,7 +76,14 @@ public class GooseGame {
                     message = doWin(message, player);
                 }
             }
-            else {
+            else if(currentPosition == 6){
+                player.incrementPosition(6);
+                message += " to The Bridge. " + playerName +" jumps to 12";
+            } else if (goosePosition.contains(currentPosition)) {
+                player.incrementPosition(increment);
+                message += " to " + currentPosition + ", The Goose. " + playerName + " moves again and goes to " + player.getPosition();
+            }
+            else{
                 message += " to " + player.getPosition()+".";
             }
         }
