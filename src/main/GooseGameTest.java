@@ -61,4 +61,15 @@ public class GooseGameTest {
         assertEquals("Pippo rolls 7, 5. Pippo" + " moves from 10 to 22",
                 gooseGame.throwDices("move Pippo 7, 5"));
     }
+
+    @Test
+    public void throwDicesTwoPlayersAndMaintainPosition(){
+
+        gooseGame.throwDices("move Pippo 3, 2");
+        gooseGame.throwDices("move Pluto 3, 2");
+
+        assertEquals("Pippo rolls 7, 5. Pippo" + " moves from 5 to 12",
+                gooseGame.throwDices("move Pippo 7, 5"));
+
+    }
 }

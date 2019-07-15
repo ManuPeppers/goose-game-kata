@@ -6,7 +6,7 @@ import java.util.List;
 public class GooseGame {
 
     private List<Player> playerList=new ArrayList<>();
-    private int nowPosition=0;
+    private int nowPositionPlayer =0;
     private String startingPosition="Start";
 
 
@@ -51,25 +51,26 @@ public class GooseGame {
         String whosThrowing= " ";
         int diceOnePoints = Integer.parseInt(s.split(" |, ")[2]);
         int diceTwoPoints = Integer.parseInt(s.split(" |, ")[3]);
-        int dicePointsSum = diceOnePoints + diceTwoPoints + nowPosition;
+        int dicePointsSum = diceOnePoints + diceTwoPoints + nowPositionPlayer;
 
         whosThrowing=s.split(" |, ")[1];
 
 
         formatPosition = whosThrowing +
                             " rolls " +
-                diceOnePoints +
+                        diceOnePoints +
                                  ", " +
-                diceTwoPoints + ". "+
+                    diceTwoPoints +
+                                  ". "+
                          whosThrowing +
                         " moves from "+
                      startingPosition +
                                " to " +
-                dicePointsSum;
-
+                            dicePointsSum;
 
         startingPosition= String.valueOf(dicePointsSum);
-                nowPosition= dicePointsSum;
+
+                nowPositionPlayer = dicePointsSum;
 
         return formatPosition;
     }
